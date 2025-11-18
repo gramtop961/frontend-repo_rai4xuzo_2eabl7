@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 const sampleProjects = [
@@ -37,11 +38,21 @@ function Projects() {
           <p className="mt-2 text-slate-300">A selection of work focused on speed, accessibility and delightful interactions.</p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={{
+            hidden: { opacity: 0 },
+            show: { opacity: 1, transition: { staggerChildren: 0.12 } },
+          }}
+        >
           {projects.map((p, idx) => (
-            <a
+            <motion.a
               key={idx}
               href={p.link}
+              variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
               className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-transform hover:-translate-y-1"
             >
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br from-cyan-400/10 to-blue-500/10" />
@@ -57,9 +68,10 @@ function Projects() {
                   ))}
                 </div>
               </div>
-            </a>
+              <div className="pointer-events-none absolute -bottom-24 right-0 h-40 w-40 rounded-full bg-cyan-400/20 blur-3xl transition-all duration-500 group-hover:-bottom-16 group-hover:opacity-100" />
+            </motion.a>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

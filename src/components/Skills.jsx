@@ -1,10 +1,12 @@
+import { motion } from 'framer-motion'
+
 const skills = [
-  { name: 'React', level: 'Expert' },
-  { name: 'TypeScript', level: 'Advanced' },
-  { name: 'Tailwind CSS', level: 'Advanced' },
-  { name: 'Next.js', level: 'Advanced' },
-  { name: 'Framer Motion', level: 'Advanced' },
-  { name: 'Accessibility (a11y)', level: 'Advanced' },
+  { name: 'React', level: 90 },
+  { name: 'TypeScript', level: 85 },
+  { name: 'Tailwind CSS', level: 88 },
+  { name: 'Next.js', level: 84 },
+  { name: 'Framer Motion', level: 86 },
+  { name: 'Accessibility (a11y)', level: 82 },
 ]
 
 function Skills() {
@@ -17,16 +19,29 @@ function Skills() {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {skills.map((s) => (
-            <div key={s.name} className="rounded-2xl border border-white/10 bg-white/5 p-5">
+          {skills.map((s, i) => (
+            <motion.div
+              key={s.name}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ delay: i * 0.06, duration: 0.4 }}
+              className="rounded-2xl border border-white/10 bg-white/5 p-5"
+            >
               <div className="flex items-center justify-between">
                 <p className="text-white font-medium">{s.name}</p>
-                <span className="text-xs text-slate-300">{s.level}</span>
+                <span className="text-xs text-slate-300">{s.level}%</span>
               </div>
-              <div className="mt-3 h-2 rounded-full bg-white/10">
-                <div className="h-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 w-[85%]" />
+              <div className="mt-3 h-2 rounded-full bg-white/10 overflow-hidden">
+                <motion.div
+                  className="h-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500"
+                  initial={{ width: 0 }}
+                  whileInView={{ width: `${s.level}%` }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, ease: 'easeOut' }}
+                />
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
